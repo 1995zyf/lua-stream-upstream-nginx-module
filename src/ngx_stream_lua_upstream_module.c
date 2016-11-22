@@ -110,7 +110,7 @@ ngx_stream_lua_upstream_get_upstreams(lua_State * L)
 
     umcf = ngx_stream_lua_upstream_get_upstream_main_conf(L);
     if (umcf == NULL) {
-        lua_pushnil(L);
+        lua_createtable(L, 0, 0);
         return 1;
     }
 
