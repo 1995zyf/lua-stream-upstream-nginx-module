@@ -1,5 +1,5 @@
 /*
- * Copyright (C) Yichun Zhang (agentzh), Aleksey Konovkin (ZigzagAK)
+ * Copyright (C) Aleksey Konovkin (ZigzagAK)
  */
 
 
