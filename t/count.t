@@ -1,6 +1,7 @@
 # vim:set ft= ts=4 sw=4 et fdm=marker:
 
 use Test::Nginx::Socket::Lua;
+use Test::Nginx::Socket::Lua::Stream;
 
 #worker_connections(1014);
 #master_on();
@@ -23,11 +24,11 @@ run_tests();
 
 __DATA__
 
-=== TEST 1: number of entries in the module table
+=== TEST 1: number of entries in the ngx.upstream.stream table
 --- config
     location /t {
         content_by_lua_block {
-            local upstream = require "ngx.upstream"
+            local upstream = require "ngx.upstream.stream"
             local c = 0
             for _, _ in pairs(upstream) do
                 c = c + 1
@@ -38,6 +39,22 @@ __DATA__
 --- request
     GET /t
 --- response_body
+count: 6
+--- no_error_log
+[error]
+
+
+=== TEST 2: number of entries in the ngx.upstream module table
+--- stream_server_config
+    content_by_lua_block {
+        local upstream = require "ngx.upstream"
+        local c = 0
+        for _, _ in pairs(upstream) do
+            c = c + 1
+        end
+        ngx.say("count: ", c)
+    }
+--- stream_response
 count: 6
 --- no_error_log
 [error]
