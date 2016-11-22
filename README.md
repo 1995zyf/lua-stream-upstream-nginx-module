@@ -56,7 +56,7 @@ http {
             default_type text/plain;
             content_by_lua_block {
                 local concat = table.concat
-                local upstream = require "ngx.upstream"
+                local upstream = require "ngx.upstream.stream"
                 local get_servers = upstream.get_servers
                 local get_upstreams = upstream.get_upstreams
 
