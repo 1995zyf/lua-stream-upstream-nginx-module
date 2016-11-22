@@ -109,6 +109,11 @@ ngx_stream_lua_upstream_get_upstreams(lua_State * L)
     }
 
     umcf = ngx_stream_lua_upstream_get_upstream_main_conf(L);
+    if (umcf == NULL) {
+        lua_pushnil(L);
+        return 1;
+    }
+
     uscfp = umcf->upstreams.elts;
 
     lua_createtable(L, umcf->upstreams.nelts, 0);
@@ -505,6 +510,10 @@ ngx_stream_lua_upstream_find_upstream(lua_State *L, ngx_str_t *host)
     ngx_stream_upstream_main_conf_t        *umcf;
 
     umcf = ngx_stream_lua_upstream_get_upstream_main_conf(L);
+    if (umcf == NULL) {
+        return NULL;
+    }
+
     uscfp = umcf->upstreams.elts;
 
     for (i = 0; i < umcf->upstreams.nelts; i++) {
