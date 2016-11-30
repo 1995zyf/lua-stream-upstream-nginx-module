@@ -32,16 +32,18 @@ Synopsis
 ========
 
 ```nginx
-http {
+stream {
     upstream foo.com {
         server 127.0.0.1 fail_timeout=53 weight=4 max_fails=100;
         server agentzh.org:81;
     }
 
     upstream bar {
-        server 127.0.0.2;
+        server 127.0.0.2:80;
     }
+}
 
+http {
     server {
         listen 8080;
 
@@ -227,10 +229,10 @@ Example:
 
 ```lua
 -- upstream my_upstream { ... }
--- proxy_pass http://my_upstream;
+-- proxy_pass my_upstream;
 upstream.current_upstream_name() --> my_upstream
 
--- proxy_pass http://example.com:1234;
+-- proxy_pass example.com:1234;
 upstream.current_upstream_name() --> example.com:1234
 ```
 
@@ -286,7 +288,7 @@ export LUAJIT_INC=/opt/luajit/include/luajit-2.1
 ./configure --prefix=/opt/nginx \
     --with-ld-opt="-Wl,-rpath,$LUAJIT_LIB" \
     --add-module=/path/to/lua-nginx-module \
-    --add-module=/path/to/lua-upstream-nginx-module
+    --add-module=/path/to/lua-stream-upstream-nginx-module
 
 make -j2
 make install
@@ -297,7 +299,7 @@ Starting from NGINX 1.9.11, you can also compile this module as a dynamic module
 directive, for example,
 
 ```nginx
-load_module /path/to/modules/ngx_http_lua_upstream_module.so;
+load_module /path/to/modules/ngx_http_lua_stream_upstream_module.so;
 ```
 
 [Back to TOC](#table-of-contents)
