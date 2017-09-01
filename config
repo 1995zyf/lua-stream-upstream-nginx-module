@@ -3,6 +3,12 @@ ngx_addon_name_2=ngx_stream_lua_upstream_http_api_module
 
 STREAM_LUA_UPSTREAM_SRCS="$ngx_addon_dir/src/ngx_stream_lua_upstream_module.c $ngx_addon_dir/src/ngx_stream_lua_upstream_http_api_module.c"
 
+stream_lua_nginx_module_incs="$(echo $CORE_INCS | awk '{
+    match($0, /([^ ]*\/stream-lua-nginx-module\/src)/, arr)
+    print arr[1]
+}')"
+CORE_INCS="$CORE_INCS $stream_lua_nginx_module_incs"
+
 if test -n "$ngx_module_link"; then
     ngx_module_type=STREAM
     ngx_module_name=$ngx_addon_name_1
@@ -15,11 +21,9 @@ if test -n "$ngx_module_link"; then
     ngx_module_srcs="$ngx_addon_dir/src/ngx_stream_lua_upstream_http_api_module.c"
 
     . auto/module
+
 else
     STREAM_MODULES="$STREAM_MODULES $ngx_addon_name_1"
     HTTP_MODULES="$STREAM_MODULES $ngx_addon_name_2"
     NGX_ADDON_SRCS="$NGX_ADDON_SRCS $STREAM_LUA_UPSTREAM_SRCS"
-
-    CORE_INCS="$CORE_INCS $ngx_module_incs"
-    CORE_LIBS="$CORE_LIBS $ngx_module_libs"
 fi

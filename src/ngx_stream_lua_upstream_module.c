@@ -12,7 +12,11 @@
 #include <ngx_core.h>
 #include <ngx_stream.h>
 #include <lauxlib.h>
+
+
+#include "ngx_stream_lua_request.h"
 #include "ngx_stream_lua_api.h"
+
 
 ngx_module_t ngx_stream_lua_upstream_module;
 
@@ -57,6 +61,15 @@ ngx_module_t ngx_stream_lua_upstream_module = {
     NGX_MODULE_V1_PADDING
 };
 
+
+ngx_stream_session_t *
+ngx_stream_lua_get_session(lua_State *L)
+{
+    ngx_stream_lua_request_t *r = ngx_stream_lua_get_request(L);
+    return r != NULL ? r->session : NULL;
+}
+
+
 static ngx_int_t
 ngx_stream_lua_upstream_init(ngx_conf_t *cf)
 {
@@ -69,6 +82,7 @@ ngx_stream_lua_upstream_init(ngx_conf_t *cf)
 
     return NGX_OK;
 }
+
 
 int
 ngx_stream_lua_upstream_create_module(lua_State * L)

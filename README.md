@@ -21,7 +21,6 @@ Table of Contents
 * [Installation](#installation)
 * [Author](#author)
 * [Copyright and License](#copyright-and-license)
-* [See Also](#see-also)
 
 Status
 ======
@@ -253,54 +252,14 @@ Compatibility
 
 The following versions of Nginx should work with this module:
 
-* **1.11.x** (last tested: 1.11.2)
-* **1.10.x**
-* **1.9.x**  (last tested: 1.9.15)
-* **1.8.x**
-* **1.7.x**  (last tested: 1.7.10)
-* **1.6.x**
-* **1.5.x**  (last tested: 1.5.12)
+* **1.11.x** (last tested: 1.11.6)
 
 [Back to TOC](#table-of-contents)
 
 Installation
 ============
 
-This module is bundled and enabled by default in the [OpenResty](http://openresty.org) bundle. And you are recommended to use OpenResty.
-
-1. Grab the nginx source code from [nginx.org](http://nginx.org/), for example,
-the version 1.11.2 (see [nginx compatibility](#compatibility)),
-2. then grab the source code of the [ngx_lua](https://github.com/openresty/lua-nginx-module#installation) as well as its dependencies like [LuaJIT](http://luajit.org/download.html).
-3. and finally build the source with this module:
-
-```bash
-wget 'http://nginx.org/download/nginx-1.11.2.tar.gz'
-tar -xzvf nginx-1.11.2.tar.gz
-cd nginx-1.11.2/
-
-# assuming your luajit is installed to /opt/luajit:
-export LUAJIT_LIB=/opt/luajit/lib
-
-# assuming you are using LuaJIT v2.1:
-export LUAJIT_INC=/opt/luajit/include/luajit-2.1
-
-# Here we assume you would install you nginx under /opt/nginx/.
-./configure --prefix=/opt/nginx \
-    --with-ld-opt="-Wl,-rpath,$LUAJIT_LIB" \
-    --add-module=/path/to/lua-nginx-module \
-    --add-module=/path/to/lua-stream-upstream-nginx-module
-
-make -j2
-make install
-```
-
-Starting from NGINX 1.9.11, you can also compile this module as a dynamic module, by using the `--add-dynamic-module=PATH` option instead of `--add-module=PATH` on the
-`./configure` command line above. And then you can explicitly load the module in your `nginx.conf` via the [load_module](http://nginx.org/en/docs/ngx_core_module.html#load_module)
-directive, for example,
-
-```nginx
-load_module /path/to/modules/ngx_http_lua_stream_upstream_module.so;
-```
+Launch build.sh.
 
 [Back to TOC](#table-of-contents)
 
@@ -308,6 +267,8 @@ Author
 ======
 
 Yichun "agentzh" Zhang (章亦春) <agentzh@gmail.com>, CloudFlare Inc.
+
+Aleksey Konovkin "ZigzagAK" <alkon2000@mail.ru>.
 
 [Back to TOC](#table-of-contents)
 
@@ -329,11 +290,3 @@ Redistribution and use in source and binary forms, with or without modification,
 THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 [Back to TOC](#table-of-contents)
-
-See Also
-========
-* the ngx_lua module: http://github.com/openresty/lua-nginx-module#readme
-* the [lua-resty-upstream-healthcheck](https://github.com/openresty/lua-resty-upstream-healthcheck) library which makes use of the Lua API provided by this module.
-
-[Back to TOC](#table-of-contents)
-
