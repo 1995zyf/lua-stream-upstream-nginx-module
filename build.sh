@@ -90,6 +90,8 @@ function build_debug() {
   fi
   make install > /dev/null
 
+  mv "$INSTALL_PREFIX/nginx-$VERSION$SUFFIX/sbin/nginx" "$INSTALL_PREFIX/nginx-$VERSION$SUFFIX/sbin/nginx.debug"
+
   cd ..
 }
 
@@ -252,7 +254,7 @@ download
 extract_downloads
 build
 
-cp LICENSE "$INSTALL_PREFIX/nginx-$VERSION/LICENSE"
+cp build/$INSTALL_PREFIX/nginx-$VERSION/LICENSE "$INSTALL_PREFIX/nginx-$VERSION/LICENSE"
 
 cd "$DIR"
 
